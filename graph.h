@@ -1,3 +1,9 @@
+/**
+ * AUTOR: Luis Eduardo Galindo Amaya                           FECHA: 03-04-2023
+ *
+ * DESCRIPCIÓN:
+ * Bibloteca para representar grafos con una matriz de adyacensia en C
+ */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,7 +12,7 @@
 
 struct Graph
 {
-    int *data;
+    GRAPH_DATA_TYPE *data;
     int lenght;
 };
 
@@ -24,14 +30,30 @@ int graphLenght(Graph *graph)
  */
 void graphInit(Graph *graph, int nodes)
 {
-    // numero de nodos necesarios para representar
-    // el grafo = (nNodos**2-nNodos)/2
-    int foo = (nodes * (nodes - 1)) / 2;
-    graph->data = malloc(foo*sizeof(int));
+    int foo = (nodes * (nodes - 1)) >> 1;
+    graph->data = malloc(foo * sizeof(GRAPH_DATA_TYPE));
 
     graph->lenght = nodes;
 }
 
+/**
+ * Liberar el espacio de los nodos
+ * @param graph puntero al nodo
+ */  
+void graphFree(Graph *graph) 
+{
+    free(graph->data);
+    graph->data = NULL;
+    graph->lenght = 0;
+}
+
+/**
+ * Determinar si un edge no esta conectado a si mismo o si el nodo existe
+ * @param graph puntero al grafo
+ * @param origin nodo
+ * @param destiny nodo
+ * @param boolean
+ */
 int graphValidPosition(Graph *graph, int origin, int destiny)
 {
     // encontrar el minimo
@@ -41,16 +63,12 @@ int graphValidPosition(Graph *graph, int origin, int destiny)
     int nodes = graph->lenght;
 
     if (minn == maxn)
-    {
         // nodo conectado a si mismo
         return 0;
-    }
 
     if (maxn >= nodes || minn < 0)
-    {
         // nodo mas grande que la cantidad de espacio disponible
         return 0;
-    }
 
     return 1;
 }
@@ -80,23 +98,28 @@ int graphEdgeIndex(Graph *graph, int origin, int destiny)
         exit(EXIT_FAILURE);
     }
 
-    
-    int a = nodes - 1;
-    int b = a - minn;
+    int maxIndex = nodes - 1;
     int c = 0;
-    for (int i = a; i > b; i--) {
-        // NOTE: quiza esto se puede replazar por una serie de sumas aritmeticas
+    for (int i = maxIndex; i > maxIndex - minn; i--)
+    {
+        // quiza esto puede replazar por una serie de sumas geometricas
         c += i;
     }
     return c + (maxn - minn) - 1;
 }
 
-void graphSetEdgeWeight(Graph *graph, int origin, int destiny, int weigth)
+/**
+ * Cambiar el valor del edge entre dos nodos
+ */
+void graphSetEdgeWeight(Graph *graph, int origin, int destiny, GRAPH_DATA_TYPE weigth)
 {
     graph->data[graphEdgeIndex(graph, origin, destiny)] = weigth;
 }
 
-GRAPH_DATA_TYPE grapthGetEdgeWeight(Graph *graph, int origin, int destiny)
+/**
+ * Obtener el valor del edge entre dos nodos
+ */
+GRAPH_DATA_TYPE graphGetEdgeWeight(Graph *graph, int origin, int destiny)
 {
     return graph->data[graphEdgeIndex(graph, origin, destiny)];
 }
