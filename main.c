@@ -12,14 +12,13 @@ void displayGraph(Graph *graph)
     {
         for (int j = 0; j < foo; j++)
         {
-            
             if (!graphValidPosition(graph, i, j))
             {
                 printf("- ");
                 continue;
             }
 
-            printf("%d ", grapthGetEdgeWeight(graph, i, j));
+            printf("%d ", graphGetEdgeWeight(graph, i, j));
         }
 
         printf("\n");
