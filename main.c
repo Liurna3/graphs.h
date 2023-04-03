@@ -12,6 +12,7 @@ void displayGraph(Graph *graph)
     {
         for (int j = 0; j < foo; j++)
         {
+            
             if (!graphValidPosition(graph, i, j))
             {
                 printf("- ");
@@ -31,9 +32,24 @@ int main()
     Graph bar;
     graphInit(&bar, 6);
 
+    printf("a %d\n", graphEdgeIndex(&bar, 0,1));
+
+    // A
     graphSetEdgeWeight(&bar, 0, 1, 4);
-    graphSetEdgeWeight(&bar, 0, 2, 4);  
+    graphSetEdgeWeight(&bar, 0, 2, 4);
+
+    // B
     graphSetEdgeWeight(&bar, 1, 2, 2);
+    graphSetEdgeWeight(&bar, 1, 4, 1);
+
+    // C
+    graphSetEdgeWeight(&bar, 2, 3, 1);
+
+    // D
+    graphSetEdgeWeight(&bar, 3, 5, 2);
+
+    // E 
+    graphSetEdgeWeight(&bar, 4, 5, 4);
 
     displayGraph(&bar);
 

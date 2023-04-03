@@ -4,11 +4,13 @@
 
 #define GRAPH_DATA_TYPE int
 
-typedef struct Graph
+struct Graph
 {
-    GRAPH_DATA_TYPE *data;
+    int *data;
     int lenght;
-} Graph;
+};
+
+typedef struct Graph Graph;
 
 int graphLenght(Graph *graph)
 {
@@ -25,8 +27,8 @@ void graphInit(Graph *graph, int nodes)
     // numero de nodos necesarios para representar
     // el grafo = (nNodos**2-nNodos)/2
     int foo = (nodes * (nodes - 1)) / 2;
+    graph->data = malloc(foo*sizeof(int));
 
-    graph->data = malloc(sizeof(GRAPH_DATA_TYPE) * foo);
     graph->lenght = nodes;
 }
 
@@ -46,7 +48,7 @@ int graphValidPosition(Graph *graph, int origin, int destiny)
 
     if (maxn >= nodes || minn < 0)
     {
-        // nodo mas grande que la cantidad de espacio disponible 
+        // nodo mas grande que la cantidad de espacio disponible
         return 0;
     }
 
@@ -78,7 +80,15 @@ int graphEdgeIndex(Graph *graph, int origin, int destiny)
         exit(EXIT_FAILURE);
     }
 
-    return (minn * (nodes - minn) + maxn - minn) - 1;
+    
+    int a = nodes - 1;
+    int b = a - minn;
+    int c = 0;
+    for (int i = a; i > b; i--) {
+        // NOTE: quiza esto se puede replazar por una serie de sumas aritmeticas
+        c += i;
+    }
+    return c + (maxn - minn) - 1;
 }
 
 void graphSetEdgeWeight(Graph *graph, int origin, int destiny, int weigth)
