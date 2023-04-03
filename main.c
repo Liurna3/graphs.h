@@ -14,11 +14,11 @@ void displayGraph(Graph *graph)
         {
             if (!graphValidPosition(graph, i, j))
             {
-                printf("- ");
+                printf(" - ");
                 continue;
             }
 
-            printf("%d ", graphGetEdgeWeight(graph, i, j));
+            printf("%2d ", graphGetEdgeWeight(graph, i, j));
         }
 
         printf("\n");
@@ -31,7 +31,7 @@ int main()
     Graph bar;
     graphInit(&bar, 6);
 
-    printf("a %d\n", graphEdgeIndex(&bar, 0,1));
+    //printf("a %d\n", graphEdgeIndex(&bar, 0,1));
 
     // A
     graphSetEdgeWeight(&bar, 0, 1, 4);
@@ -50,6 +50,23 @@ int main()
     // E 
     graphSetEdgeWeight(&bar, 4, 5, 4);
 
+    displayGraph(&bar);
+
+    graphFree(&bar);
+
+    // otro grafo
+    graphInit(&bar, 5);
+
+    // 1
+    graphSetEdgeWeight(&bar, 0, 1, 1);
+    graphSetEdgeWeight(&bar, 0, 3, 1);
+
+    // 2
+    graphSetEdgeWeight(&bar, 1, 4, 1);
+    graphSetEdgeWeight(&bar, 1, 2, 1);
+
+    // 3
+    graphSetEdgeWeight(&bar, 2, 3, 1);
     displayGraph(&bar);
 
     return 0;
