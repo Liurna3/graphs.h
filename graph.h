@@ -39,8 +39,8 @@ void graphInit(Graph *graph, int nodes)
 /**
  * Liberar el espacio de los nodos
  * @param graph puntero al nodo
- */  
-void graphFree(Graph *graph) 
+ */
+void graphFree(Graph *graph)
 {
     free(graph->data);
     graph->data = NULL;
@@ -98,14 +98,25 @@ int graphEdgeIndex(Graph *graph, int origin, int destiny)
         exit(EXIT_FAILURE);
     }
 
-    int maxIndex = nodes - 1;
+    /* int maxIndex = nodes - 1;
     int c = 0;
     for (int i = maxIndex; i > maxIndex - minn; i--)
-    {
         // quiza esto puede replazar por una serie de sumas geometricas
         c += i;
-    }
-    return c + (maxn - minn) - 1;
+    return c + (maxn - minn) - 1; */
+
+    /*
+    series algebraicas
+    int foo = minn * (minn + 1) / 2;
+    return minn * nodes - foo + (maxn - minn - 1);
+    */
+
+    /*
+    factores desarollados
+    return (minn*( 2*nodes - minn - 3 ) + 2 * (maxn - 1))/2;
+    */
+
+    return (minn * ((nodes << 1) - minn - 3) + ((maxn - 1) << 1)) >> 1;
 }
 
 /**

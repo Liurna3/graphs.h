@@ -54,6 +54,7 @@ int main()
 
     graphFree(&bar);
 
+    puts("---------------");
     // otro grafo
     graphInit(&bar, 5);
 
