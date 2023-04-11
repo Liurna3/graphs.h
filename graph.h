@@ -33,6 +33,9 @@ void graphInit(Graph *graph, int nodes)
     int foo = (nodes * (nodes - 1)) >> 1;
     graph->data = malloc(foo * sizeof(GRAPH_DATA_TYPE));
 
+    for (int i = 0; i < foo; i++)
+        graph->data[i] = 0;
+
     graph->lenght = nodes;
 }
 
